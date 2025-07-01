@@ -1,0 +1,27 @@
+  GNU nano 6.2                                                 docker-compose.yaml
+version: '3'
+services:
+  nginx-proxy:
+    image: jc21/nginx-proxy-manager:latest
+    container_name: nginx-proxy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "81:81"
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+    environment:
+      DB_SQLITE_FILE: "/data/database.sqlite"
+      DISABLE_IPV6: "true"
+
+  whoami1:
+    image: containous/whoami
+    container_name: whoami1
+    restart: always
+
+  whoami2:
+    image: containous/whoami
+    container_name: whoami2
+    restart: always
